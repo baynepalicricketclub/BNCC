@@ -22,7 +22,7 @@
         <li><a href="players.html">Players</a></li>
         <li><a href="schedule.html" class="active">Schedule</a></li>
         <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="admin.html" class="nav-admin">✏ Edit</a></li>
+        <li><a href="admin.html" class="nav-admin">&#9998; Edit</a></li>
       </ul>
     </div>
   </nav>
@@ -32,16 +32,37 @@
   </div>
 
   <main class="schedule-main">
-    <div class="schedule-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="upcoming">Upcoming</button>
-      <button class="filter-btn" data-filter="win">Wins</button>
-      <button class="filter-btn" data-filter="loss">Losses</button>
-    </div>
 
-    <div class="matches-list" id="allMatches">
-      <div class="empty-state" style="padding:2rem 0">No matches scheduled yet.</div>
-    </div>
+    <!-- GOOGLE CALENDAR -->
+    <section class="cal-section">
+      <h2 class="cal-title">Team calendar</h2>
+      <p class="cal-sub">Live from Google Calendar — add matches there and they appear here automatically</p>
+      <div class="cal-wrapper">
+        <iframe
+          src="https://calendar.google.com/calendar/embed?src=baynepalicricketclub%40gmail.com&ctz=America%2FLos_Angeles&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&mode=MONTH&color=%239b1c1c"
+          style="border:0"
+          width="100%"
+          height="600"
+          frameborder="0"
+          scrolling="no">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- MATCH RESULTS -->
+    <section class="results-section">
+      <h2 class="cal-title">Match results</h2>
+      <div class="schedule-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+        <button class="filter-btn" data-filter="win">Wins</button>
+        <button class="filter-btn" data-filter="loss">Losses</button>
+      </div>
+      <div class="matches-list" id="allMatches">
+        <div class="empty-state" style="padding:2rem 0">No matches added yet. Use the admin panel to add results.</div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="footer">

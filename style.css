@@ -387,3 +387,32 @@ img { max-width: 100%; display: block; }
   .full-table { font-size: 12px; }
   .full-table th, .full-table td { padding: 8px 6px 8px 0; }
 }
+
+/* ---- Google Calendar ---- */
+.cal-section {
+  margin-bottom: 3rem;
+}
+.cal-title {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.4rem; font-weight: 500; letter-spacing: 0.06em;
+  color: var(--green-dark); text-transform: uppercase;
+  border-bottom: 2px solid var(--gold);
+  display: inline-block; padding-bottom: 4px;
+  margin-bottom: 6px;
+}
+.cal-sub {
+  font-size: 13px; color: var(--text-muted); margin-bottom: 16px;
+}
+.cal-wrapper {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.cal-wrapper iframe {
+  display: block;
+  width: 100%;
+}
+.results-section {
+  margin-bottom: 3rem;
+}
