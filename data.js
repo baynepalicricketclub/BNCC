@@ -10,5 +10,6 @@ window.BNCC_DATA = {
   "batting": [],
   "bowling": [],
   "fielding": [],
+  "profiles": [],
   "gallery": []
 };
