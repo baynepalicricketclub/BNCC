@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery · BNCC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Teko:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="logo.jpg" class="brand-logo" alt="BNCC" /><span class="brand-name">BNCC</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="players.html">Players</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="admin.html" class="nav-admin">✏ Edit</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1 class="page-title">Gallery</h1>
+  </div>
+
+  <main class="gallery-main">
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-empty">
+        <p>No photos yet.</p>
+        <p style="font-size:13px;margin-top:6px">Add image URLs in the admin panel to fill this gallery.</p>
+        <a href="admin.html" class="see-all" style="display:inline-block;margin-top:12px">Go to admin →</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Bay Nepali Cricket Club · Bay Area, California</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bay Nepali Cricket Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Teko:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="logo.jpg" class="brand-logo" alt="BNCC" /><span class="brand-name">BNCC</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="players.html">Players</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="admin.html" class="nav-admin">✏ Edit</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-geo"></div>
+    <div class="hero-content">
+      <div class="hero-top">
+        <img src="logo.jpg" class="hero-logo" alt="BNCC Logo" />
+        <div>
+          <div class="hero-eyebrow">Bay Area · Est. 2015</div>
+          <h1 class="hero-title">Bay Nepali<br>Cricket Club</h1>
+          <p class="hero-sub">"Inclusive, Supportive, and Competitive"</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat" id="h-wins">—</div>
+      <div class="hstat-label">Wins</div>
+      <div class="hstat" id="h-losses">—</div>
+      <div class="hstat-label">Losses</div>
+      <div class="hstat" id="h-rank">—</div>
+      <div class="hstat-label">Standing</div>
+    </div>
+  </header>
+
+  <!-- MAIN GRID -->
+  <main class="main-grid">
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="card announce-card">
+      <h2 class="card-title">Announcements</h2>
+      <ul class="announce-list" id="announceList">
+        <li class="announce-empty">No announcements yet.</li>
+      </ul>
+    </section>
+
+    <!-- UPCOMING MATCH -->
+    <section class="card next-match-card">
+      <h2 class="card-title">Next match</h2>
+      <div id="nextMatch" class="next-match-placeholder">No upcoming matches scheduled.</div>
+    </section>
+
+    <!-- RECENT RESULTS -->
+    <section class="card results-card">
+      <h2 class="card-title">Recent results</h2>
+      <ul class="results-list" id="resultsList">
+        <li class="empty-state">No results yet.</li>
+      </ul>
+      <a href="schedule.html" class="see-all">See full schedule →</a>
+    </section>
+
+    <!-- TOP BATTERS -->
+    <section class="card stats-card">
+      <h2 class="card-title">Top batters</h2>
+      <table class="stats-table" id="battersTable">
+        <thead><tr><th>Player</th><th>Runs</th><th>Avg</th><th>HS</th></tr></thead>
+        <tbody><tr><td colspan="4" class="empty-state">No data yet.</td></tr></tbody>
+      </table>
+      <a href="players.html" class="see-all">All player stats →</a>
+    </section>
+
+    <!-- TOP BOWLERS -->
+    <section class="card stats-card">
+      <h2 class="card-title">Top bowlers</h2>
+      <table class="stats-table" id="bowlersTable">
+        <thead><tr><th>Player</th><th>Wkts</th><th>Avg</th><th>Econ</th></tr></thead>
+        <tbody><tr><td colspan="4" class="empty-state">No data yet.</td></tr></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Bay Nepali Cricket Club · Bay Area, California</p>
+    <p class="footer-sub">Stats sourced from <a href="https://cricclubs.com/baca/viewTeam.do?teamId=1189&clubId=1755" target="_blank">CricClubs</a></p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · BNCC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Teko:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin-login { max-width: 360px; margin: 6rem auto; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; text-align: center; }
+    .admin-login h2 { font-family: 'Teko', sans-serif; font-size: 1.6rem; margin-bottom: 1rem; color: #1a3a2a; }
+    .admin-login input { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px; margin-bottom: 12px; box-sizing: border-box; }
+    .admin-login button { background: #1a3a2a; color: #fff; border: none; padding: 10px 28px; border-radius: 8px; font-size: 15px; cursor: pointer; }
+    .admin-wrap { display: none; max-width: 820px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .admin-section { margin-bottom: 2.5rem; }
+    .admin-section h3 { font-family: 'Teko', sans-serif; font-size: 1.3rem; color: #1a3a2a; margin-bottom: 1rem; border-bottom: 2px solid #d4af3a; padding-bottom: 4px; display: inline-block; }
+    .form-row { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin-bottom: 10px; }
+    .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+    .form-row.four { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .form-row.single { grid-template-columns: 1fr; }
+    label { font-size: 12px; color: #6b7280; margin-bottom: 2px; display: block; }
+    input[type=text], input[type=date], input[type=number], textarea, select {
+      width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; box-sizing: border-box; font-family: 'Inter', sans-serif;
+    }
+    textarea { min-height: 72px; resize: vertical; }
+    .add-btn { background: #1a3a2a; color: #fff; border: none; padding: 9px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; margin-top: 6px; }
+    .add-btn:hover { background: #2a5a3e; }
+    .remove-btn { background: none; border: 1px solid #e5e7eb; border-radius: 6px; padding: 4px 10px; font-size: 12px; color: #6b7280; cursor: pointer; }
+    .remove-btn:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+    .data-list { list-style: none; padding: 0; margin: 12px 0 0; }
+    .data-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f9fafb; border-radius: 6px; margin-bottom: 6px; font-size: 13px; gap: 8px; }
+    .data-list li .li-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .save-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #1a3a2a; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 14px 2rem; z-index: 100; }
+    .save-bar span { font-size: 14px; }
+    .save-bar button { background: #d4af3a; color: #1a3a2a; border: none; padding: 9px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .save-bar button:hover { background: #e8c850; }
+    .toast { position: fixed; top: 20px; right: 20px; background: #1a3a2a; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 14px; z-index: 200; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+    .section-toggle { background: none; border: none; font-size: 13px; color: #6b7280; cursor: pointer; margin-left: 12px; }
+    .hero-score-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="logo.jpg" class="brand-logo" alt="BNCC" /><span class="brand-name">BNCC</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- LOGIN -->
+  <div class="admin-login" id="loginBox">
+    <h2>Admin Panel</h2>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:16px">Enter your admin password to continue</p>
+    <input type="password" id="pwInput" placeholder="Password" />
+    <br>
+    <button onclick="checkPw()">Sign in</button>
+    <p id="pwErr" style="color:#dc2626;font-size:13px;margin-top:10px;display:none">Incorrect password.</p>
+    <p style="font-size:11px;color:#9ca3af;margin-top:16px">Default password: <code>bncc2025</code> — change it in data.js</p>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-wrap" id="adminWrap">
+    <h2 style="font-family:'Teko',sans-serif;font-size:2rem;color:#1a3a2a;margin-bottom:0.25rem">Admin Panel</h2>
+    <p style="font-size:13px;color:#6b7280;margin-bottom:2rem">All changes are saved to your browser. Export the JSON and replace data.js to publish.</p>
+
+    <!-- HERO STATS -->
+    <div class="admin-section">
+      <h3>Season overview (hero)</h3>
+      <div class="hero-score-row">
+        <div><label>Wins</label><input type="number" id="hWins" min="0" /></div>
+        <div><label>Losses</label><input type="number" id="hLosses" min="0" /></div>
+        <div><label>Standing (e.g. 2nd)</label><input type="text" id="hRank" /></div>
+      </div>
+    </div>
+
+    <!-- ANNOUNCEMENTS -->
+    <div class="admin-section">
+      <h3>Announcements</h3>
+      <div class="form-row single"><label>Text</label><textarea id="annText" placeholder="e.g. Practice moved to Sunday 8am at Southside ground"></textarea></div>
+      <div class="form-row"><div><label>Date</label><input type="date" id="annDate" /></div><div><label>Type</label><select id="annType"><option value="general">General</option><option value="urgent">Urgent</option><option value="info">Info</option></select></div></div>
+      <button class="add-btn" onclick="addAnnouncement()">+ Add announcement</button>
+      <ul class="data-list" id="annList"></ul>
+    </div>
+
+    <!-- MATCHES -->
+    <div class="admin-section">
+      <h3>Matches</h3>
+      <div class="form-row"><div><label>Opponent</label><input type="text" id="mOpp" placeholder="e.g. Northside Tigers" /></div><div><label>Date</label><input type="date" id="mDate" /></div></div>
+      <div class="form-row three">
+        <div><label>Venue</label><input type="text" id="mVenue" placeholder="e.g. Southside Ground" /></div>
+        <div><label>Result</label><select id="mResult"><option value="upcoming">Upcoming</option><option value="win">Win</option><option value="loss">Loss</option><option value="tie">Tie</option><option value="nr">No result</option></select></div>
+        <div><label>Score (e.g. 142/6 vs 138/8)</label><input type="text" id="mScore" placeholder="optional" /></div>
+      </div>
+      <button class="add-btn" onclick="addMatch()">+ Add match</button>
+      <ul class="data-list" id="matchList"></ul>
+    </div>
+
+    <!-- BATTING STATS -->
+    <div class="admin-section">
+      <h3>Batting stats</h3>
+      <div class="form-row four">
+        <div><label>Player name</label><input type="text" id="bName" /></div>
+        <div><label>Matches</label><input type="number" id="bM" min="0" /></div>
+        <div><label>Innings</label><input type="number" id="bInn" min="0" /></div>
+        <div><label>Runs</label><input type="number" id="bRuns" min="0" /></div>
+      </div>
+      <div class="form-row four">
+        <div><label>Avg</label><input type="number" id="bAvg" step="0.1" /></div>
+        <div><label>Strike rate</label><input type="number" id="bSR" step="0.1" /></div>
+        <div><label>High score</label><input type="number" id="bHS" min="0" /></div>
+        <div><label>50s / 100s</label><input type="text" id="b50s100s" placeholder="e.g. 2/0" /></div>
+      </div>
+      <button class="add-btn" onclick="addBatter()">+ Add batter</button>
+      <ul class="data-list" id="bList"></ul>
+    </div>
+
+    <!-- BOWLING STATS -->
+    <div class="admin-section">
+      <h3>Bowling stats</h3>
+      <div class="form-row four">
+        <div><label>Player name</label><input type="text" id="boName" /></div>
+        <div><label>Matches</label><input type="number" id="boM" min="0" /></div>
+        <div><label>Overs</label><input type="number" id="boOvers" step="0.1" /></div>
+        <div><label>Wickets</label><input type="number" id="boWkts" min="0" /></div>
+      </div>
+      <div class="form-row three">
+        <div><label>Runs conceded</label><input type="number" id="boRuns" min="0" /></div>
+        <div><label>Economy</label><input type="number" id="boEcon" step="0.1" /></div>
+        <div><label>Best figures (e.g. 3/12)</label><input type="text" id="boBest" /></div>
+      </div>
+      <button class="add-btn" onclick="addBowler()">+ Add bowler</button>
+      <ul class="data-list" id="boList"></ul>
+    </div>
+
+    <!-- FIELDING STATS -->
+    <div class="admin-section">
+      <h3>Fielding stats</h3>
+      <div class="form-row four">
+        <div><label>Player name</label><input type="text" id="fName" /></div>
+        <div><label>Catches</label><input type="number" id="fCatches" min="0" /></div>
+        <div><label>Run outs</label><input type="number" id="fRO" min="0" /></div>
+        <div><label>Stumpings</label><input type="number" id="fSt" min="0" /></div>
+      </div>
+      <button class="add-btn" onclick="addFielder()">+ Add fielder</button>
+      <ul class="data-list" id="fList"></ul>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="admin-section">
+      <h3>Gallery photos</h3>
+      <div class="form-row"><div><label>Image URL</label><input type="text" id="gUrl" placeholder="https://example.com/photo.jpg" /></div><div><label>Caption (optional)</label><input type="text" id="gCaption" /></div></div>
+      <button class="add-btn" onclick="addPhoto()">+ Add photo</button>
+      <ul class="data-list" id="gList"></ul>
+    </div>
+
+    <div style="height:80px"></div>
+  </div>
+
+  <!-- SAVE BAR -->
+  <div class="save-bar" id="saveBar" style="display:none">
+    <span>Unsaved changes</span>
+    <div style="display:flex;gap:10px">
+      <button onclick="exportJSON()" style="background:#fff;color:#1a3a2a">Export data.js</button>
+      <button onclick="saveToLocal()">Save locally</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="data.js"></script>
+  <script>
+    // ---- Auth ----
+    function checkPw() {
+      const pw = document.getElementById('pwInput').value;
+      if (pw === (window.BNCC_DATA.adminPassword || 'bncc2025')) {
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('adminWrap').style.display = 'block';
+        document.getElementById('saveBar').style.display = 'flex';
+        loadAll();
+      } else {
+        document.getElementById('pwErr').style.display = 'block';
+      }
+    }
+    document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+
+    // ---- State ----
+    let state = JSON.parse(JSON.stringify(window.BNCC_DATA));
+    try {
+      const saved = localStorage.getItem('bncc_admin_state');
+      if (saved) state = JSON.parse(saved);
+    } catch(e) {}
+
+    function markDirty() {
+      document.getElementById('saveBar').style.display = 'flex';
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ---- Load ----
+    function loadAll() {
+      document.getElementById('hWins').value = state.season.wins || 0;
+      document.getElementById('hLosses').value = state.season.losses || 0;
+      document.getElementById('hRank').value = state.season.standing || '';
+      renderList('annList', state.announcements, a => `${a.date} — ${a.text}`, 'announcements');
+      renderList('matchList', state.matches, m => `${m.date} vs ${m.opponent} [${m.result}]`, 'matches');
+      renderList('bList', state.batting, b => `${b.name} — ${b.runs} runs`, 'batting');
+      renderList('boList', state.bowling, b => `${b.name} — ${b.wickets} wkts`, 'bowling');
+      renderList('fList', state.fielding, f => `${f.name} — ${f.catches} catches`, 'fielding');
+      renderList('gList', state.gallery, g => g.url, 'gallery');
+    }
+
+    function renderList(id, arr, labelFn, key) {
+      const ul = document.getElementById(id);
+      if (!arr || !arr.length) { ul.innerHTML = '<li style="color:#9ca3af;font-size:13px;padding:6px 0">Nothing added yet.</li>'; return; }
+      ul.innerHTML = arr.map((item, i) =>
+        `<li><span class="li-text">${labelFn(item)}</span><button class="remove-btn" onclick="removeItem('${key}',${i})">Remove</button></li>`
+      ).join('');
+    }
+
+    function removeItem(key, i) {
+      state[key].splice(i, 1);
+      loadAll();
+      markDirty();
+    }
+
+    // ---- Adds ----
+    function addAnnouncement() {
+      const text = document.getElementById('annText').value.trim();
+      const date = document.getElementById('annDate').value;
+      const type = document.getElementById('annType').value;
+      if (!text) return alert('Please enter announcement text.');
+      state.announcements.unshift({ text, date: date || new Date().toISOString().slice(0,10), type });
+      document.getElementById('annText').value = '';
+      loadAll(); markDirty();
+    }
+
+    function addMatch() {
+      const opp = document.getElementById('mOpp').value.trim();
+      const date = document.getElementById('mDate').value;
+      const venue = document.getElementById('mVenue').value.trim();
+      const result = document.getElementById('mResult').value;
+      const score = document.getElementById('mScore').value.trim();
+      if (!opp || !date) return alert('Opponent and date are required.');
+      state.matches.push({ opponent: opp, date, venue, result, score });
+      state.matches.sort((a,b) => b.date.localeCompare(a.date));
+      document.getElementById('mOpp').value = ''; document.getElementById('mScore').value = '';
+      loadAll(); markDirty();
+    }
+
+    function addBatter() {
+      const name = document.getElementById('bName').value.trim();
+      if (!name) return alert('Player name required.');
+      const parts = document.getElementById('b50s100s').value.split('/');
+      state.batting.push({
+        name,
+        matches: +document.getElementById('bM').value || 0,
+        innings: +document.getElementById('bInn').value || 0,
+        runs: +document.getElementById('bRuns').value || 0,
+        avg: +document.getElementById('bAvg').value || 0,
+        sr: +document.getElementById('bSR').value || 0,
+        hs: +document.getElementById('bHS').value || 0,
+        fifties: +(parts[0]||0), hundreds: +(parts[1]||0)
+      });
+      state.batting.sort((a,b) => b.runs - a.runs);
+      document.getElementById('bName').value = ''; document.getElementById('bRuns').value = '';
+      loadAll(); markDirty();
+    }
+
+    function addBowler() {
+      const name = document.getElementById('boName').value.trim();
+      if (!name) return alert('Player name required.');
+      state.bowling.push({
+        name,
+        matches: +document.getElementById('boM').value || 0,
+        overs: +document.getElementById('boOvers').value || 0,
+        wickets: +document.getElementById('boWkts').value || 0,
+        runs: +document.getElementById('boRuns').value || 0,
+        economy: +document.getElementById('boEcon').value || 0,
+        best: document.getElementById('boBest').value.trim() || '—'
+      });
+      state.bowling.sort((a,b) => b.wickets - a.wickets);
+      document.getElementById('boName').value = ''; document.getElementById('boWkts').value = '';
+      loadAll(); markDirty();
+    }
+
+    function addFielder() {
+      const name = document.getElementById('fName').value.trim();
+      if (!name) return alert('Player name required.');
+      state.fielding.push({
+        name,
+        catches: +document.getElementById('fCatches').value || 0,
+        runouts: +document.getElementById('fRO').value || 0,
+        stumpings: +document.getElementById('fSt').value || 0
+      });
+      document.getElementById('fName').value = '';
+      loadAll(); markDirty();
+    }
+
+    function addPhoto() {
+      const url = document.getElementById('gUrl').value.trim();
+      if (!url) return alert('Image URL required.');
+      state.gallery.push({ url, caption: document.getElementById('gCaption').value.trim() });
+      document.getElementById('gUrl').value = ''; document.getElementById('gCaption').value = '';
+      loadAll(); markDirty();
+    }
+
+    // ---- Save ----
+    function saveToLocal() {
+      state.season.wins = +document.getElementById('hWins').value;
+      state.season.losses = +document.getElementById('hLosses').value;
+      state.season.standing = document.getElementById('hRank').value;
+      localStorage.setItem('bncc_admin_state', JSON.stringify(state));
+      showToast('Saved to browser ✓');
+    }
+
+    function exportJSON() {
+      state.season.wins = +document.getElementById('hWins').value;
+      state.season.losses = +document.getElementById('hLosses').value;
+      state.season.standing = document.getElementById('hRank').value;
+      const js = `window.BNCC_DATA = ${JSON.stringify(state, null, 2)};`;
+      const blob = new Blob([js], { type: 'text/javascript' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'data.js';
+      a.click();
+      showToast('data.js downloaded — replace the file in your site folder ✓');
+    }
+  </script>
+</body>
+</html>

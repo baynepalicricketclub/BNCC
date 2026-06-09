@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Players · BNCC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Teko:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="logo.jpg" class="brand-logo" alt="BNCC" /><span class="brand-name">BNCC</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="players.html" class="active">Players</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="admin.html" class="nav-admin">✏ Edit</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1 class="page-title">Players</h1>
+  </div>
+
+  <main class="players-main">
+    <div class="tabs">
+      <button class="tab active" data-tab="batting">Batting</button>
+      <button class="tab" data-tab="bowling">Bowling</button>
+      <button class="tab" data-tab="fielding">Fielding</button>
+    </div>
+
+    <section class="tab-panel active" id="tab-batting">
+      <table class="full-table" id="fullBattersTable">
+        <thead>
+          <tr>
+            <th>Player</th><th>M</th><th>Inn</th><th>Runs</th><th>Avg</th><th>SR</th><th>HS</th><th>50s</th><th>100s</th>
+          </tr>
+        </thead>
+        <tbody><tr><td colspan="9" class="empty-state">No batting data yet.</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="tab-panel" id="tab-bowling">
+      <table class="full-table" id="fullBowlersTable">
+        <thead>
+          <tr>
+            <th>Player</th><th>M</th><th>Overs</th><th>Wkts</th><th>Runs</th><th>Avg</th><th>Econ</th><th>Best</th>
+          </tr>
+        </thead>
+        <tbody><tr><td colspan="8" class="empty-state">No bowling data yet.</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="tab-panel" id="tab-fielding">
+      <table class="full-table" id="fieldingTable">
+        <thead>
+          <tr>
+            <th>Player</th><th>Catches</th><th>Run outs</th><th>Stumpings</th>
+          </tr>
+        </thead>
+        <tbody><tr><td colspan="4" class="empty-state">No fielding data yet.</td></tr></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Bay Nepali Cricket Club · Bay Area, California</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
