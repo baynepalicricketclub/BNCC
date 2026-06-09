@@ -107,6 +107,31 @@ if (document.getElementById('h-wins') !== null) {
       ? top.map(b => `<tr><td>${playerCell(b.name)}</td><td>${b.wickets}</td><td>${b.economy.toFixed(1)}</td><td>${b.best}</td></tr>`).join('')
       : '<tr><td colspan="4" class="empty-state">No data yet.</td></tr>';
   }
+  // Know Your Players
+  const kypGrid = document.getElementById('kypGrid');
+  const kypAdminLink = document.getElementById('kypAdminLink');
+  if (kypGrid) {
+    const profiles = D.profiles || [];
+    if (profiles.length) {
+      if (kypAdminLink) kypAdminLink.style.display = 'none';
+      kypGrid.innerHTML = profiles.map(p => {
+        const [bg, fg] = avatarColor(p.name);
+        const photoEl = p.photo
+          ? `<img src="${p.photo}" alt="${p.name}" class="kyp-photo" />`
+          : `<div class="kyp-avatar" style="background:${bg};color:${fg}">${initials(p.name)}</div>`;
+        return `<div class="kyp-card">
+          ${photoEl}
+          <div class="kyp-info">
+            <div class="kyp-name">${p.jersey ? `<span class="kyp-jersey">#${p.jersey}</span>` : ''}${p.name}</div>
+            <div class="kyp-role">${p.role}</div>
+            ${p.bat || p.bowl ? `<div class="kyp-style">${[p.bat, p.bowl].filter(Boolean).join(' · ')}</div>` : ''}
+            ${p.hometown ? `<div class="kyp-hometown">📍 ${p.hometown}</div>` : ''}
+            ${p.bio ? `<p class="kyp-bio">${p.bio}</p>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+    }
+  }
 }
 
 // ---- PLAYERS PAGE ----
