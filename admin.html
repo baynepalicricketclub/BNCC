@@ -150,6 +150,27 @@
       <ul class="data-list" id="fList"></ul>
     </div>
 
+    <!-- PLAYER PROFILES -->
+    <div class="admin-section">
+      <h3>Know your players — profiles</h3>
+      <div class="form-row">
+        <div><label>Player name</label><input type="text" id="ppName" placeholder="e.g. Sanjay Karki" /></div>
+        <div><label>Role</label><select id="ppRole"><option>Batsman</option><option>Bowler</option><option>All-rounder</option><option>Wicket-keeper</option><option>Wicket-keeper Batsman</option></select></div>
+      </div>
+      <div class="form-row">
+        <div><label>Batting style</label><select id="ppBat"><option>Right-hand bat</option><option>Left-hand bat</option></select></div>
+        <div><label>Bowling style</label><input type="text" id="ppBowl" placeholder="e.g. Right-arm medium, Leg spin" /></div>
+      </div>
+      <div class="form-row">
+        <div><label>Hometown (Nepal)</label><input type="text" id="ppHome" placeholder="e.g. Kathmandu" /></div>
+        <div><label>Jersey number</label><input type="number" id="ppJersey" placeholder="e.g. 7" min="1" /></div>
+      </div>
+      <div class="form-row single"><label>Bio (1–2 sentences)</label><textarea id="ppBio" placeholder="e.g. Sanjay is the team's engine in the middle order, known for his calm finishing and sharp fielding."></textarea></div>
+      <div class="form-row single"><label>Photo URL (optional)</label><input type="text" id="ppPhoto" placeholder="https://example.com/photo.jpg" /></div>
+      <button class="add-btn" onclick="addProfile()">+ Add player profile</button>
+      <ul class="data-list" id="ppList"></ul>
+    </div>
+
     <!-- GALLERY -->
     <div class="admin-section">
       <h3>Gallery photos</h3>
@@ -216,6 +237,7 @@
       renderList('bList', state.batting, b => `${b.name} — ${b.runs} runs`, 'batting');
       renderList('boList', state.bowling, b => `${b.name} — ${b.wickets} wkts`, 'bowling');
       renderList('fList', state.fielding, f => `${f.name} — ${f.catches} catches`, 'fielding');
+      renderList('ppList', state.profiles || [], p => `#${p.jersey || '?'} ${p.name} — ${p.role}`, 'profiles');
       renderList('gList', state.gallery, g => g.url, 'gallery');
     }
 
@@ -303,6 +325,26 @@
         stumpings: +document.getElementById('fSt').value || 0
       });
       document.getElementById('fName').value = '';
+      loadAll(); markDirty();
+    }
+
+    function addProfile() {
+      const name = document.getElementById('ppName').value.trim();
+      if (!name) return alert('Player name required.');
+      if (!state.profiles) state.profiles = [];
+      state.profiles.push({
+        name,
+        role: document.getElementById('ppRole').value,
+        bat: document.getElementById('ppBat').value,
+        bowl: document.getElementById('ppBowl').value.trim(),
+        hometown: document.getElementById('ppHome').value.trim(),
+        jersey: document.getElementById('ppJersey').value.trim(),
+        bio: document.getElementById('ppBio').value.trim(),
+        photo: document.getElementById('ppPhoto').value.trim()
+      });
+      document.getElementById('ppName').value = '';
+      document.getElementById('ppBio').value = '';
+      document.getElementById('ppPhoto').value = '';
       loadAll(); markDirty();
     }
 
